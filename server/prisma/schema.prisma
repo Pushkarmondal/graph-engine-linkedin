@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  companies Company[]
+  skills    Skill[]
+
+  connectionsFrom Connection[] @relation("fromUser")
+  connectionsTo   Connection[] @relation("toUser")
+}
+
+model Connection {
+  id String @id @default(uuid())
+
+  fromId String
+  toId   String
+
+  fromUser User @relation("fromUser", fields: [fromId], references: [id])
+  toUser   User @relation("toUser", fields: [toId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([fromId, toId])
+}
+
+model Company {
+  id       String @id @default(uuid())
+  name     String
+  industry String
+
+  users User[]
+}
+
+model Skill {
+  id   String @id @default(uuid())
+  name String
+
+  users User[]
+}
