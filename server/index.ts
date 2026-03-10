@@ -4,6 +4,7 @@ import companyRoutes from "./src/routes/app.routes";
 import skillRoutes from "./src/routes/app.routes";
 import attachCompanyToUser from "./src/routes/app.routes";
 import attachSkillsToUser from "./src/routes/app.routes";
+import connectUsers from "./src/routes/app.routes";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -20,6 +21,7 @@ app.use("/api", companyRoutes)
 app.use("/api", skillRoutes)
 app.use("/api", attachCompanyToUser)
 app.use("/api", attachSkillsToUser)
+app.use("/api", connectUsers)
 
 
 app.listen(PORT, () => {
