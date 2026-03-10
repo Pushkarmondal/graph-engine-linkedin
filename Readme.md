@@ -60,6 +60,10 @@ PORT=3000
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/users` | Create a new user |
+| POST | `/companies` | Create a new company |
+| POST | `/skills` | Create a new skill |
+| POST | `/users/:id/company` | Attach a company to a user |
+| POST | `/users/:id/skill` | Attach a skill to a user |
 | POST | `/connect` | Connect two users |
 | GET | `/users/:id/mutual/:targetId` | Get mutual connections |
 | GET | `/users/:id/recommendations` | Get friend-of-friend suggestions |
