@@ -84,4 +84,21 @@ export const connectUsers = async (fromId: string, toId: string) => {
   await session.close();
 }
 
-
+export const getMutualConnections = async (userId: string, targetId: string) => {
+  const session = getSession()
+  
+    const result = await session.run(
+      `
+      MATCH (a:User {id:$userId})-[:CONNECTED]->(m)<-[:CONNECTED]-(b:User {id:$targetId})
+      RETURN m.id AS id, m.name AS name
+      `,
+      { userId, targetId }
+    )
+  
+    await session.close()
+  
+    return result.records.map(r => ({
+      id: r.get("id"),
+      name: r.get("name")
+    }))
+}
