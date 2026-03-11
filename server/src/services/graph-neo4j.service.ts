@@ -56,3 +56,15 @@ export const attachCompanyToUser = async (userId: string, companyId: string) => 
   )
 }
 
+export const attachSkillsToUser = async (userId: string, skillsId: string) => {
+  const session = getSession();
+  await session.run(
+    `
+    MATCH (u:User {id: $userId})
+    MATCH (s:Skill {id: $skillsId})
+    MERGE (u)-[:HAS_SKILL]->(s)
+    `,
+    {userId, skillsId}
+  )
+}
+
